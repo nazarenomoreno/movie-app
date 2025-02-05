@@ -1,0 +1,39 @@
+
+
+body{
+    background-color: rgb(0, 0, 0);
+    padding-bottom:150px;
+}
+
+.contenedor-principal{
+    margin-top:30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(43, 61, 63);
+    height: 100vh;                              /*flexbox necesita altura suficiente para centrar el contenido*/
+}
+
+.row {
+    background-color: rgb(83, 79, 79);
+    display: flex;
+    justify-content:flex-start;                  /* alinea los elementos al inicio del contenedor principal */
+    flex-wrap: nowrap;                          /* se mantendran los elementos en la misma fila*/
+    width: 100%;                               /*  el contenedor ocupe todo el espacio disponible en la ventana */
+    overflow-x:auto;                          /*  scroll horizontal si los elementos no caben*/
+}
+  
+.pelicula {
+    margin: 10px;
+    flex-shrink: 0;              /*evita que los elementos se compriman */
+    
+}
+  
+
+
+
+img{
+    width:150px;
+    border: 3px solid black;
+    cursor: pointer;
+}

@@ -1,63 +1,50 @@
-import { useState } from 'react'
+import {useState, useEffect} from 'react';
+import './App.css';
+
+import MovieList from './components/MovieList';
+
 
 function App() {
-  const [movies, setMovies] = useState([
-    {
-      Title: "Guardians of the Galaxy Vol. 2",
-      Year: "2017",
-      Rated: "PG-13",
-      Released: "05 May 2017",
-      Runtime: "136 min",
-      Genre: "Action, Adventure, Comedy",
-      Director: "James Gunn",
-      Writer: "James Gunn, Dan Abnett, Andy Lanning",
-      Actors: "Chris Pratt, Zoe Saldana, Dave Bautista",
-      Plot: "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father, the ambitious celestial being Ego.",
-      Language: "English",
-      Country: "United States",
-      Awards: "Nominated for 1 Oscar. 15 wins & 60 nominations total",
-      Poster: "https://m.media-amazon.com/images/M/MV5BNWE5MGI3MDctMmU5Ni00YzI2LWEzMTQtZGIyZDA5MzQzNDBhXkEyXkFqcGc@._V1_SX300.jpg",
-      Ratings: [
-        {
-          Source: "Internet Movie Database",
-          Value: "7.6/10"
-        },
-        {
-          Source: "Rotten Tomatoes",
-          Value: "85%"
-        },
-        {
-          Source: "Metacritic",
-          Value: "67/100"
-        }
-      ],
-      Metascore: "67",
-      imdbRating: "7.6",
-      imdbVotes: "784,257",
-      imdbID: "tt3896198",
-      Type: "movie",
-      DVD: "N/A",
-      BoxOffice: "$389,813,101",
-      Production: "N/A",
-      Website: "N/A",
-      Response: "True"
-    }
-    
-  ])
+  const [movies, setMovies] = useState([])
   
+
+
+  async function getMovieRequest(){
+
+    const url = 'http://www.omdbapi.com/?s=Star+Wars&apikey=5e56e43'
+
+
+    try{
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);   // si la solicitud es falsa (no fue exitosa)
+      //  throw interrumpe la ejecución del código y crea una nueva instancia de Error
+
+
+      const data = await response.json();
+      console.log(data);    
+      setMovies(data.Search)      
+    }
+    catch{
+      console.error("Hubo un error en la solicitud:", error);
+    }
+  }
+  
+
+
+  useEffect(()=>{
+    getMovieRequest();
+  },[])
+ 
 
 
   return (
     <>
-        <div>
-        {movies.map((movie, index) => (
-          <div key={index}>
-            <h2>{movie.Title}</h2>
-            <p>{movie.Year}</p>
-            <img src={movie.Poster} alt={movie.Title} />
-            <p>{movie.Plot}</p>
-          </div>
-        ))}
+        <div className='contenedor-principal'>
+
+            <div className='row'>
+                <MovieList movies={movies}/>
+            </div>
+          
         </div>
     </>
   )

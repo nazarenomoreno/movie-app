@@ -1,3 +1,3 @@
-# Movie App
+### Movie App
 
-página creada con React para buscar peliculas desde la api IMDb API
+página diseñada con React para buscar películas desde la api RESTful, IMDb API.
