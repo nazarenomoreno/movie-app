@@ -9,34 +9,46 @@ function App() {
 
   
   const [movies, setMovies] = useState([])
+  
+  
   const [busqueda, setBusqueda] = useState('Star+Wars')
-  const [favorites, setFavorites] = useState([
+  
+  
+  const [favorites, setFavorites] = useState(()=>{
+
+    const storedFavorites = localStorage.getItem('favorites');
+    return storedFavorites ? JSON.parse(storedFavorites) : [
     {
-      "Title": "Manchester by the Sea",
-      "Year": "2016",
-      "imdbID": "tt4034228",
+      "Title": "Ghost World",
+      "Year": "2001",
+      "imdbID": "tt0162346",
       "Type": "movie",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BMTYxMjk0NDg4Ml5BMl5BanBnXkFtZTgwODcyNjA5OTE@._V1_SX300.jpg"
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNzQ4NmFmYzYtNGJmZi00NGNkLTk2YTktM2Q0MzQ5MWRlZGEyXkEyXkFqcGc@._V1_SX300.jpg"
     },
     {
-      "Title": "Jaws",
-      "Year": "1975",
-      "imdbID": "tt0073195",
+      "Title": "Yi Yi",
+      "Year": "2000",
+      "imdbID": "tt0244316",
       "Type": "movie",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BYjViNDQzNmUtYzkxZi00NTk5LTljMmItYjJlZmZkODIxNjU1XkEyXkFqcGc@._V1_SX300.jpg"
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNTAyMDQ5Y2MtZDk0NC00N2IyLWE5OTgtZjJkZWNlMDBhMDhlXkEyXkFqcGc@._V1_SX300.jpg"
     },
     {
-      "Title": "El Camino",
-      "Year": "2019",
-      "imdbID": "tt9243946",
+      "Title": "A Brighter Summer Day",
+      "Year": "1991",
+      "imdbID": "tt0101985",
       "Type": "movie",
-      "Poster": "https://m.media-amazon.com/images/M/MV5BYTYxMjI2YzUtODQ5Mi00M2JmLTlmNzItOTlkM2MyM2ExM2RlXkEyXkFqcGc@._V1_SX300.jpg"
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMGRkNGQwOTktNWQxOS00ZDRjLThmODktNWY4NThjNDU2MjM5XkEyXkFqcGc@._V1_SX300.jpg"
     }
-  ])
+  ];
+
+
+    
+
+  })
   
 
 
-  async function getMovieRequest(busqueda){
+  async function getMovieRequest(){
 
 
     const url = `https://www.omdbapi.com/?s=${busqueda}&apikey=5e56e43`
@@ -64,10 +76,17 @@ function App() {
   
 
 
+
+
+
   useEffect(()=>{
     getMovieRequest(busqueda);
     console.log('nueva busqueda: ', busqueda)
   },[busqueda])
+
+  useEffect(()=>{                                                   //cada vez que cambie el estado favorite
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  },[favorites])
  
 
 
@@ -96,7 +115,7 @@ function App() {
     <>
         <div className='contenedor-principal'>
 
-            <Header  titulo={'Resultados (haz click para añadir a favoritas)'}  showInput={true} value={busqueda} setValue={setBusqueda}/>
+            <Header  titulo={'Resultados (haz click para agregar a favoritas)'}  showInput={true} value={busqueda} setValue={setBusqueda}/>
 
             <div className='row'>
                 <MovieList movies={movies} favorites={favorites} setFavorites={setFavorites} funcion={addMovie}/>

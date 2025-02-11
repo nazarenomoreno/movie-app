@@ -52,19 +52,25 @@ img{
     flex: 1;
     justify-content: flex-start;
     align-items: center;
+    white-space: nowrap;
     
 }
 
 h3{
-    margin-left: 10px;
-    white-space: nowrap;
+   
+    flex-shrink: 1;                    /*permite que el título se reduzca si es necesario */
+    min-width: 0;                     /*hacemos que el texto tengo un ancho minimo (dentro del contenedor flex) para que no desborde a la barra de busqueda*/
+    margin-left:10px;
 }
+
 input{
+    flex-shrink: 0;
     margin:auto;
     margin-left: 800px;
     padding: 10px;
     width:400px;
     border: 1px solid black;
+    margin-right:20px;
     
 }
 
