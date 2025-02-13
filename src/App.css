@@ -24,7 +24,7 @@ body{
     justify-content:flex-start;                  /* alinea los elementos al inicio del contenedor principal */
     flex-wrap: nowrap;                          /* se mantendran los elementos en la misma fila*/
     width: 100%;                               /*  el contenedor ocupe todo el espacio disponible en la ventana */
-    overflow-x:scroll;                          /*  scroll horizontal si los elementos no caben*/
+    overflow-x:auto;                          /*  scroll horizontal si los elementos no caben*/
     
    
 }

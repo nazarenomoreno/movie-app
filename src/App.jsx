@@ -14,12 +14,10 @@ function App() {
   const [busqueda, setBusqueda] = useState('Star+Wars')
   
   
-  const [favorites, setFavorites] = useState(()=>{
 
-    const storedFavorites = localStorage.getItem('favorites');
-    return storedFavorites ? JSON.parse(storedFavorites) : [
-    {
-      "Title": "Ghost World",
+const peliculasPredeterminadas = [        //esto se usará cuando el estado favorites es null o si esta vacio
+    {                                          
+      "Title": "Ghost World",                 
       "Year": "2001",
       "imdbID": "tt0162346",
       "Type": "movie",
@@ -39,13 +37,31 @@ function App() {
       "Type": "movie",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMGRkNGQwOTktNWQxOS00ZDRjLThmODktNWY4NThjNDU2MjM5XkEyXkFqcGc@._V1_SX300.jpg"
     }
-  ];
+  ]
 
 
+
+  const [favorites, setFavorites] = useState(()=>{
+
+    if (!localStorage.getItem('favorites')) {                  //si es null (el localStorage esta vacio) se llena 
+      return peliculasPredeterminadas;            //es nulo cuando el estado nunca tuvo elementos o cuando se hace localStorage.clear()
+    }
+  
+
+    //si hay elementos en el localStorage
+    const traidasDeFavorites = JSON.parse(localStorage.getItem('favorites'));  //se convierte el JSON a un array de objetos
+  
+
+    
+    return traidasDeFavorites.length > 0 ? traidasDeFavorites : peliculasPredeterminadas;  //si tiene al menos una pelicula
+    ///si el array es vacío (si se eliminan las peliculas desde la pagina, el estado tiene un array vacio, no nulo), también usamos las películas predeterminadas
     
 
   })
   
+
+
+
 
 
   async function getMovieRequest(){
@@ -84,20 +100,19 @@ function App() {
     console.log('nueva busqueda: ', busqueda)
   },[busqueda])
 
+
   useEffect(()=>{                                                   //cada vez que cambie el estado favorite
     localStorage.setItem('favorites', JSON.stringify(favorites));
   },[favorites])
  
-
-
-
-
 
   function addMovie(props,index){       // al hacer click en una pelicula
     console.log(props.movies[index].Title)
     props.setFavorites([...props.favorites, props.movies[index]])    //traemos lo que ya tenemos y añadimos lo nuevo
     
   }
+
+
 
 
   function removeMovie(props, index){
@@ -107,7 +122,6 @@ function App() {
 
     props.setFavorites(newFavorites);                //actualiza el estado con el nuevo array
   }
-
 
 
 
