@@ -3,6 +3,7 @@ import './App.css';
 
 import MovieList from './components/MovieList';
 import Header from './components/Header';
+import { use } from 'react';
 
 
 function App() {
@@ -101,15 +102,27 @@ const peliculasPredeterminadas = [        //esto se usará cuando el estado favo
   },[busqueda])
 
 
-  useEffect(()=>{                                                   //cada vez que cambie el estado favorite
+  useEffect(()=>{                                                   //cada vez que cambie el estado favorites
     localStorage.setItem('favorites', JSON.stringify(favorites));
   },[favorites])
  
 
+
+  
   function addMovie(props,index){       // al hacer click en una pelicula
     console.log(props.movies[index].Title)
-    props.setFavorites([...props.favorites, props.movies[index]])    //traemos lo que ya tenemos y añadimos lo nuevo
-    
+
+    const moviePick = props.movies[index].Title        //pelicula seleccionada
+
+    const verification= props.favorites.every(element => element.Title !== moviePick);   //si todos los elementos son diferentes de moviePick, devuelve un TRUE. el every devuelve un TRUE siempre que se haya cumplido la condicion. si la condición no se cumple una vez, es FALSE
+
+
+    if(verification){
+      console.log(`esta pelicula ${moviePick}, no se encuentra en la lista`)
+      props.setFavorites([...props.favorites, props.movies[index]])    //traemos lo que ya tenemos y añadimos lo nuevo
+    }else{
+      alert('ESA PELICULA YA SE ENCUENTRA EN FAVORITAS!');
+    }
   }
 
 
