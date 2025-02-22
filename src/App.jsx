@@ -77,11 +77,32 @@ const peliculasPredeterminadas = [        //esto se usará cuando el estado favo
       //  throw interrumpe la ejecución del código y crea una nueva instancia de Error
 
 
-      const data = await response.json();
-
+      const data = await response.json();   // convierte de json (texto) a un objeto javascript
+      console.log(data);
+      /*                    DATA
+        {
+          "Search": [                                               -> Un array con las películas encontradas
+            {
+              "Title": "Inception",
+              "Year": "2010",
+              "imdbID": "tt1375666",
+              "Type": "movie",
+              "Poster": "https://example.com/inception.jpg"
+            },
+            {
+              "Title": "Interstellar",
+              "Year": "2014",
+              "imdbID": "tt0816692",
+              "Type": "movie",
+              "Poster": "https://example.com/interstellar.jpg"
+            }
+          ],
+          "totalResults": "2",                                ->   Cantidad total de resultados encontrados
+          "Response": "True"                                   ->   Indica si la búsqueda fue exitosa
+       }
       
-
-      //console.log(data);    
+      */
+        
 
       setMovies(data.Search || []);       //si es null, se seteará el estado con un array vacio
       
@@ -114,7 +135,7 @@ const peliculasPredeterminadas = [        //esto se usará cuando el estado favo
 
     const moviePick = props.movies[index].Title        //pelicula seleccionada
 
-    const verification= props.favorites.every(element => element.Title !== moviePick);   //si todos los elementos son diferentes de moviePick, devuelve un TRUE. el every devuelve un TRUE siempre que se haya cumplido la condicion. si la condición no se cumple una vez, es FALSE
+    const verification = props.favorites.every(element => element.Title !== moviePick);   //si todos los elementos son diferentes de moviePick (significa que no esta en favorites), devuelve un TRUE. el every devuelve un TRUE siempre que se haya cumplido la condicion. si la condición no se cumple una vez, es FALSE
 
 
     if(verification){
@@ -135,7 +156,6 @@ const peliculasPredeterminadas = [        //esto se usará cuando el estado favo
 
     props.setFavorites(newFavorites);                //actualiza el estado con el nuevo array
   }
-
 
 
   return (
